@@ -1,0 +1,20 @@
+{
+  "name": "typescript-dragndrop",
+  "version": "1.0.0",
+  "description": "I am practicing Typescript with a simple drag and drop project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akgupta0777/TypeScript-DragNDrop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akgupta0777/TypeScript-DragNDrop/issues"
+  },
+  "homepage": "https://github.com/akgupta0777/TypeScript-DragNDrop#readme"
+}
