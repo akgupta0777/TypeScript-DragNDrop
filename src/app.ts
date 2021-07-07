@@ -1,3 +1,21 @@
+
+// AutoBind Decorator that is used for binding 'this' to local bounded functions.
+function autoBind(
+    target:any,
+    methodName:String,
+    descriptor:PropertyDescriptor
+){
+    const originalMethod = descriptor.value;
+    const adjustableDescriptor: PropertyDescriptor = {
+        configurable : true,
+        get(){
+            const boundFn = originalMethod.bind(this);
+            return boundFn;
+        }
+    }
+    return adjustableDescriptor;
+}
+
 class ProjectInput {
     templateElement: HTMLTemplateElement;
     hostElement: HTMLDivElement;
@@ -26,14 +44,14 @@ class ProjectInput {
         this.hostElement.insertAdjacentElement("afterbegin",this.element);
     }
     
+    @autoBind
     private submitHandler(event: Event){
         event.preventDefault();
-        console.log("hello ffs");
         console.log(this.titleInputElement.value);
     }
 
     private configure() {
-        this.element.addEventListener("submit",this.submitHandler.bind(this));
+        this.element.addEventListener("submit",this.submitHandler);
     }
 }
 
