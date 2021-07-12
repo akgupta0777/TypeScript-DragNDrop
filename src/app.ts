@@ -128,6 +128,21 @@ function autoBind(
     return adjustableDescriptor;
 }
 
+class projectItem extends Component<HTMLUListElement,HTMLLIElement>{
+    project: Project;
+    constructor(hostId: string,project: Project){
+        super("single-project",hostId,"beforeend",project.id);
+        this.project = project;
+        this.renderContent();
+    }
+    configure() {}
+    renderContent() {
+        this.element.querySelector("h2")!.textContent = this.project.title;
+        this.element.querySelector("h3")!.textContent = this.project.people.toString()+" People(s).";
+        this.element.querySelector("p")!.textContent = this.project.description;
+    }
+}
+
 // Project List Class
 class ProjectList extends Component<HTMLDivElement,HTMLElement> {
     assignedProjects: Project[] = [];
@@ -149,11 +164,12 @@ class ProjectList extends Component<HTMLDivElement,HTMLElement> {
     
     private renderProjects(){
        const listEl = document.getElementById(`${this.type}-project-list`)! as HTMLUListElement;
-       listEl.innerHTML = ""
+       listEl.innerHTML = "";
        for(const project of this.assignedProjects){
-           const listItem = document.createElement("li");
-           listItem.textContent = project.title;
-           listEl.appendChild(listItem);
+        //    const listItem = document.createElement("li");
+        //    listItem.textContent = project.title;
+        //    listEl.appendChild(listItem);
+        new projectItem(this.element.querySelector("ul")!.id,project);
        }
     }
 
