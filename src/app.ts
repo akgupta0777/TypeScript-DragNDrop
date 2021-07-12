@@ -38,19 +38,24 @@ class Project {
 }
 
 // Listener Type Defination
-type Listener = (Item : Project[]) => void
+type Listener<T> = (Item : T[]) => void
+
+class State<T>{
+    protected listeners : Listener<T>[] = [];
+    
+    addListeners(listenerFn:Listener<T>){
+        this.listeners.push(listenerFn);
+    }
+}
 
 // Application State Management
-class StateManager {
+class StateManager extends State<Project>{
    private projects : Project[] = [];
-   private listeners : Listener[] = [];
    private static instance: StateManager;
    constructor() {
-
+       super();
    }
-   addListeners(listenerFn:Listener){
-    this.listeners.push(listenerFn);
-   }
+   
    addProject(title:string,description:string,people:number){
     const newProject = new Project(Math.random().toString(),title,description,people,ProjectStatus.Active);
     this.projects.push(newProject);
@@ -65,8 +70,6 @@ class StateManager {
     this.instance = new StateManager();
     return this.instance;
    }
-
-
 }
 
 const manager = StateManager.getInstance();
