@@ -130,6 +130,15 @@ function autoBind(
 
 class projectItem extends Component<HTMLUListElement,HTMLLIElement>{
     project: Project;
+    get peoples(){
+     if(this.project.people === 1){
+         return "1 people assigned.";
+     }
+     else{
+         return `${this.project.people} peoples assigned.`;
+     }
+    }
+
     constructor(hostId: string,project: Project){
         super("single-project",hostId,"beforeend",project.id);
         this.project = project;
@@ -138,7 +147,7 @@ class projectItem extends Component<HTMLUListElement,HTMLLIElement>{
     configure() {}
     renderContent() {
         this.element.querySelector("h2")!.textContent = this.project.title;
-        this.element.querySelector("h3")!.textContent = this.project.people.toString()+" People(s).";
+        this.element.querySelector("h3")!.textContent = this.peoples;
         this.element.querySelector("p")!.textContent = this.project.description;
     }
 }
