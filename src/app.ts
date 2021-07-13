@@ -70,6 +70,18 @@ class StateManager extends State<Project>{
    addProject(title:string,description:string,people:number){
     const newProject = new Project(Math.random().toString(),title,description,people,ProjectStatus.Active);
     this.projects.push(newProject);
+    this.update();
+   }
+
+   moveProject(id: string,newStatus: ProjectStatus){
+    const project = this.projects.find(prj => prj.id === id);
+    if(project && project.status != newStatus){
+        project.status = newStatus;
+        this.update();
+    }
+   }
+
+   update(){
     for(const listenerFn of this.listeners){
         listenerFn(this.projects.slice());
     }
@@ -159,7 +171,8 @@ class projectItem extends Component<HTMLUListElement,HTMLLIElement> implements D
 
     @autoBind
     dragStartHandler(event: DragEvent) {
-        console.log("Drag Started ",event);
+        event.dataTransfer!.setData("text/plain",this.project.id);
+        event.dataTransfer!.effectAllowed = "move";
     }
 
     @autoBind
@@ -190,8 +203,11 @@ class ProjectList extends Component<HTMLDivElement,HTMLElement> implements DragT
 
     @autoBind
     dragOverHandler(event: DragEvent){
-        const listEl = this.element.querySelector("ul")!;
-        listEl.classList.add("droppable");
+        if(event.dataTransfer && event.dataTransfer.types[0] === "text/plain"){
+            event.preventDefault();
+            const listEl = this.element.querySelector("ul")!;
+            listEl.classList.add("droppable");
+        }
     }
 
     @autoBind
@@ -199,10 +215,12 @@ class ProjectList extends Component<HTMLDivElement,HTMLElement> implements DragT
         const listEl = this.element.querySelector("ul")!;
         listEl.classList.remove("droppable");
     }
-    
+
     @autoBind
     dropHandler(event: DragEvent){
-        
+       const prjId = event.dataTransfer!.getData("text/plain");
+       const prjStatus = this.type === "active" ? ProjectStatus.Active : ProjectStatus.Finished;
+       manager.moveProject(prjId,prjStatus);
     }
 
     private renderProjects(){
