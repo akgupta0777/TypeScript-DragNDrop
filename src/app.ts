@@ -3,6 +3,17 @@ enum ProjectStatus {
     Finished
 }
 
+interface Draggable {
+    dragStartHandler(event: DragEvent): void;
+    dragEndHandler(event: DragEvent): void;
+}
+
+interface DragTarget{
+    dragOverHandler(event: DragEvent): void;
+    dropHandler(event: DragEvent): void;
+    dragLeaveHandler(event: DragEvent): void;
+}
+
 abstract class Component<T extends HTMLElement, U extends HTMLElement>{
     templateElement: HTMLTemplateElement;
     hostElement: T;
@@ -153,7 +164,7 @@ class projectItem extends Component<HTMLUListElement,HTMLLIElement>{
 }
 
 // Project List Class
-class ProjectList extends Component<HTMLDivElement,HTMLElement> {
+class ProjectList extends Component<HTMLDivElement,HTMLElement> implements Draggable {
     assignedProjects: Project[] = [];
 
     constructor(private type : "active" | "finished") {
@@ -169,20 +180,31 @@ class ProjectList extends Component<HTMLDivElement,HTMLElement> {
             this.renderProjects();
         })
         this.renderContent();
+        this.configure();
     }
     
+    @autoBind
+    dragStartHandler(event: DragEvent) {
+        console.log("Drag Started ",event);
+    }
+
+    @autoBind
+    dragEndHandler(event: DragEvent) {
+        console.log("Drag Ended");
+    }
+
     private renderProjects(){
        const listEl = document.getElementById(`${this.type}-project-list`)! as HTMLUListElement;
        listEl.innerHTML = "";
        for(const project of this.assignedProjects){
-        //    const listItem = document.createElement("li");
-        //    listItem.textContent = project.title;
-        //    listEl.appendChild(listItem);
         new projectItem(this.element.querySelector("ul")!.id,project);
        }
     }
 
-    configure(){}
+    configure(){
+        this.element.addEventListener("dragstart",this.dragStartHandler);
+        this.element.addEventListener("dragend",this.dragEndHandler);
+    }
 
     renderContent(){
         const listID = `${this.type}-project-list`;
