@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "I am practicing Typescript with a simple drag and drop project.",
   "main": "index.js",
+  "files": [
+    "src/"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel serve src/index.html",
+    "build": "cross-env NODE_ENV=production parcel build src/index.html --public-url .",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -16,5 +21,11 @@
   "bugs": {
     "url": "https://github.com/akgupta0777/TypeScript-DragNDrop/issues"
   },
-  "homepage": "https://github.com/akgupta0777/TypeScript-DragNDrop#readme"
+  "homepage": "https://github.com/akgupta0777/TypeScript-DragNDrop#readme",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "gh-pages": "^3.2.3",
+    "typescript": "^4.3.5",
+    "webpack": "^5.44.0"
+  }
 }
