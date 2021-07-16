@@ -51,7 +51,6 @@ export default class ProjectInput extends Component<HTMLDivElement,HTMLFormEleme
         if(Array.isArray(userInputs)){
             const [title,description,peopleCount] = userInputs;
             manager.addProject(title,description,+peopleCount);
-            console.log(title,description,peopleCount);
         }
         this.clearInputs();
         

@@ -7,7 +7,9 @@
     "src/"
   ],
   "scripts": {
-    "build":"webpack"
+    "build:dev":"webpack",
+    "build:prod":"webpack --config webpack.config.prod.js",
+    "start": "webpack serve --open"
   },
   "repository": {
     "type": "git",
