@@ -24,8 +24,13 @@
   "homepage": "https://github.com/akgupta0777/TypeScript-DragNDrop#readme",
   "dependencies": {
     "cross-env": "^7.0.3",
-    "gh-pages": "^3.2.3",
+    "gh-pages": "^3.2.3"
+  },
+  "devDependencies": {
+    "ts-loader": "^9.2.3",
     "typescript": "^4.3.5",
-    "webpack": "^5.44.0"
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   }
 }
