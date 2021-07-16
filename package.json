@@ -7,16 +7,14 @@
     "src/"
   ],
   "scripts": {
-    "start": "parcel serve src/index.html",
-    "build": "cross-env NODE_ENV=production parcel build src/index.html --public-url .",
-    "deploy": "gh-pages -d dist"
+    "build":"webpack"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/akgupta0777/TypeScript-DragNDrop.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Abhay Gupta",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/akgupta0777/TypeScript-DragNDrop/issues"
